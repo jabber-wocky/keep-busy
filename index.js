@@ -1,5 +1,12 @@
 const robot = require('robotjs');
-const iohook = require('iohook');
+const ioHook = require('iohook');
+
+ioHook.on('keydown', (event) => {
+    if (event.keycode == 1) {
+        process.exit();
+    }
+});
+ioHook.start();
 
 robot.setMouseDelay(2);
 
@@ -7,35 +14,33 @@ var mouseMovement = 50;
 
 function doSetTimeout() {
     setTimeout(function() {
-        var mouse = robot.getMousePos();
-        mouseMovement = mouseMovement * -1;
-        robot.moveMouse(mouse.x - mouseMovement, mouse.y);
-
-        robot.typeString("Hi there");
-        robot.keyTap("enter");
-        robot.keyToggle("shift", "down");
-        robot.keyTap("up");
-        robot.keyToggle("shift", "up");
-        robot.keyTap("backspace");
+        for (var x=0; x < width; x=x+10) {
+            y = height * Math.sin((twoPI * x) / width) + height;
+            robot.moveMouse(x,y);
+        }
+        openNotepad();
+        robot.typeString("Lorem ipsum dolor");
+        closeNotepad();
 
         doSetTimeout();
     }, 15000);
 }
-
 function openNotepad() {
     robot.keyToggle("command", "down");
     robot.keyTap("r");
     robot.keyToggle("command", "up");
     robot.typeString("notepad");
-    robot.keyTap("enter");    
+    robot.keyTap("enter");
 }
 
-iohook.on("keypress", event => {
-    if (event.rawcode == 27) {
-        process.exit();
-    }
-});
-iohook.start();
+function closeNotepad() {
+    robot.keyToggle("alt", "down");
+    robot.keyTap("f4");
+    robot.keyToggle("alt", "up");
+    robot.keyToggle("alt", "down");
+    robot.keyTap("n");
+    robot.keyToggle("alt", "up");
+}
 
 openNotepad();
 doSetTimeout();
