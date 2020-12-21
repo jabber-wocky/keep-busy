@@ -22,7 +22,7 @@ function doSetTimeout() {
             robot.moveMouse(x,y);
         }
         openNotepad();
-        robot.typeString("The quick brown fox jumped over the lazy dog.");
+        robot.typeString("Lorem ipsum dolor");
         closeNotepad();
 
         doSetTimeout();
