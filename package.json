@@ -1,0 +1,23 @@
+{
+  "name": "keep-busy",
+  "version": "1.0.0",
+  "description": "Moves mouse cursor in a sign wave and writes out text to focused application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jabber-wocky/keep-busy.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jabber-wocky/keep-busy/issues"
+  },
+  "homepage": "https://github.com/jabber-wocky/keep-busy#readme",
+  "dependencies": {
+    "robotjs": "^0.6.0"
+  }
+}
