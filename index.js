@@ -22,7 +22,7 @@ function doSetTimeout() {
         robot.keyTap("backspace");
 
         doSetTimeout();
-    }, 15000);
+    }, 60000);
 }
 
 robot.keyToggle("command", "down");
