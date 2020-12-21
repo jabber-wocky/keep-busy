@@ -1,20 +1,17 @@
 const robot = require('robotjs');
+const iohook = require('iohook');
 
 robot.setMouseDelay(2);
 
-var twoPI = Math.PI * 2.0;
-var screenSize = robot.getScreenSize();
-var height = (screenSize.height / 2) -10;
-var width = screenSize.width;
+var mouseMovement = 50;
 
 function doSetTimeout() {
     setTimeout(function() {
-        for (var x=0; x < width; x++) {
-            y = height * Math.sin((twoPI * x) / width) + height;
-            robot.moveMouse(x,y);
-        }
+        var mouse = robot.getMousePos();
+        mouseMovement = mouseMovement * -1;
+        robot.scrollMouse(mouse.x - mouseMovement, mouse.y);
 
-        robot.typeString("The quick brown fox jumped over the lazy dog.");
+        robot.typeString("Hi there");
         robot.keyTap("enter");
         robot.keyToggle("shift", "down");
         robot.keyTap("up");
@@ -25,10 +22,20 @@ function doSetTimeout() {
     }, 15000);
 }
 
-robot.keyToggle("command", "down");
-robot.keyTap("r");
-robot.keyToggle("command", "up");
-robot.typeString("notepad");
-robot.keyTap("enter");
+function openNotepad() {
+    robot.keyToggle("command", "down");
+    robot.keyTap("r");
+    robot.keyToggle("command", "up");
+    robot.typeString("notepad");
+    robot.keyTap("enter");    
+}
 
+iohook.on("keypress", event => {
+    if (event.rawcode == 27) {
+        process.exit();
+    }
+});
+iohook.start();
+
+openNotepad();
 doSetTimeout();
