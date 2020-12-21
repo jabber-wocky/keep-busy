@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jabber-wocky/keep-busy#readme",
   "dependencies": {
+    "iohook": "^0.6.6",
     "robotjs": "^0.6.0"
   }
 }
