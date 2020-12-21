@@ -9,7 +9,7 @@ function doSetTimeout() {
     setTimeout(function() {
         var mouse = robot.getMousePos();
         mouseMovement = mouseMovement * -1;
-        robot.scrollMouse(mouse.x - mouseMovement, mouse.y);
+        robot.moveMouse(mouse.x - mouseMovement, mouse.y);
 
         robot.typeString("Hi there");
         robot.keyTap("enter");
