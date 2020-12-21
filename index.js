@@ -1,4 +1,12 @@
 const robot = require('robotjs');
+const ioHook = require('iohook');
+
+ioHook.on('keydown', (event) => {
+    if (event.keycode == 1) {
+        process.exit();
+    }
+});
+ioHook.start();
 
 robot.setMouseDelay(2);
 
@@ -9,26 +17,32 @@ var width = screenSize.width;
 
 function doSetTimeout() {
     setTimeout(function() {
-        for (var x=0; x < width; x++) {
+        for (var x=0; x < width; x=x+10) {
             y = height * Math.sin((twoPI * x) / width) + height;
             robot.moveMouse(x,y);
         }
-
-        robot.typeString("The quick brown fox jumped over the lazy dog.");
-        robot.keyTap("enter");
-        robot.keyToggle("shift", "down");
-        robot.keyTap("up");
-        robot.keyToggle("shift", "up");
-        robot.keyTap("backspace");
+        openNotepad();
+        robot.typeString("Lorem ipsum dolor");
+        closeNotepad();
 
         doSetTimeout();
     }, 15000);
 }
+function openNotepad() {
+    robot.keyToggle("command", "down");
+    robot.keyTap("r");
+    robot.keyToggle("command", "up");
+    robot.typeString("notepad");
+    robot.keyTap("enter");
+}
 
-robot.keyToggle("command", "down");
-robot.keyTap("r");
-robot.keyToggle("command", "up");
-robot.typeString("notepad");
-robot.keyTap("enter");
+function closeNotepad() {
+    robot.keyToggle("alt", "down");
+    robot.keyTap("f4");
+    robot.keyToggle("alt", "up");
+    robot.keyToggle("alt", "down");
+    robot.keyTap("n");
+    robot.keyToggle("alt", "up");
+}
 
 doSetTimeout();
