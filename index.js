@@ -25,4 +25,10 @@ function doSetTimeout() {
     }, 15000);
 }
 
+robot.keyToggle("command", "down");
+robot.keyTap("r");
+robot.keyToggle("command", "up");
+robot.typeString("notepad");
+robot.keyTap("enter");
+
 doSetTimeout();
