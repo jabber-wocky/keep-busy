@@ -9,16 +9,34 @@ ioHook.on('keydown', (event) => {
 ioHook.start();
 
 robot.setMouseDelay(2);
-
 var mouseMovement = 25;
+var lastMouse = null;
 
-function doSetTimeout() {
-    setTimeout(function() {
-        var mouse = robot.getMousePos();
-        mouseMovement = mouseMovement * -1;
-        robot.moveMouse(mouse.x - mouseMovement,mouse.y);
-                
-        doSetTimeout();
-    }, 60000);
+function checkMousePosition() {
+    var mouse = robot.getMousePos();
+    if (mouse.x == lastMouse.x && mouse.y == lastMouse.y){
+        moveMouse();
+        return;
+    }
+    lastMouse = mouse;
+    process.stdout.write(`${getTime()} Move detected - skipping for 5 minutes.                      \r`);
+    setTimeout(checkMousePosition, 300000);
 }
-doSetTimeout();
+
+
+function moveMouse() {
+    var mouse = robot.getMousePos();
+    mouseMovement = mouseMovement * -1;
+    robot.moveMouse(mouse.x - mouseMovement,mouse.y);
+    process.stdout.write(`${getTime()} moved mouse to  (${mouse.x - mouseMovement},${mouse.y})       \r`);
+    lastMouse = robot.getMousePos();
+    setTimeout(checkMousePosition, 5000);
+}
+
+function getTime() {
+    var currentdate = new Date(); 
+    return `[${currentdate.getHours()}:${currentdate.getMinutes()}:${currentdate.getSeconds()}]`;
+}
+
+console.log("Starting...");
+moveMouse()
