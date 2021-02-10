@@ -35,7 +35,7 @@ function moveMouse() {
 
 function getTime() {
     var currentdate = new Date(); 
-    return `[${currentdate.getHours()}:${currentdate.getMinutes()}:${currentdate.getSeconds()}]`;
+    return `[${("0" + currentdate.getHours()).slice(-2)}:${("0" + currentdate.getMinutes()).slice(-2)}:${("0" + currentdate.getSeconds()).slice(-2)}]`;
 }
 
 console.log("Starting...");
